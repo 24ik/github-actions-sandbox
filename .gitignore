@@ -1,0 +1,10 @@
+/nimcache/
+/testresults/
+/outputGotten.txt
+/tests/*
+!/tests/*/
+/tests/*/*
+!/tests/*/test.nim
+
+/github_actions_sandbox
+/github_actions_sandbox.exe
