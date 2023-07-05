@@ -9,7 +9,7 @@ on:
 
   workflow_dispatch:
 
-permissions: wrtie-all
+permissions: write-all
 
 jobs:
   build:
