@@ -1,0 +1,13 @@
+changelog:
+  exclude:
+    labels:
+      - documentation
+      - refactor
+      - test
+  categories:
+    - title: Bug Fix 🛠
+      labels:
+        - bug
+    - title: New Features 🎉
+      labels:
+        - enhancement
