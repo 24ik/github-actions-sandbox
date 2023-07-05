@@ -9,7 +9,9 @@ on:
 
   workflow_dispatch:
 
-permissions: write-all
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   build:
@@ -21,4 +23,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          manifest: .github/labels.yml
+          manifest: .github/labels.yaml
