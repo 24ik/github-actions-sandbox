@@ -5,9 +5,9 @@ changelog:
       - refactor
       - test
   categories:
-    - title: Bug Fix 🛠
+    - title: 🛠 Bug Fix
       labels:
         - bug
-    - title: New Features 🎉
+    - title: 🎉 New Features
       labels:
         - enhancement
