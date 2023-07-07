@@ -30,15 +30,16 @@ jobs:
       - run: nimble -y install
 
       - run: |-
-          echo "ASSET=$ASSET" >> $GITHUB_ENV
           mkdir "$ASSET_DIR"
           cp ./github_actions_sandbox "./$ASSET_DIR"
-          tar -zcf "$ASSET" "./$ASSET_DIR"
+          tar -zcf "$ASSET_FILE" "./$ASSET_DIR"
+          echo "::set-output name=ASSET_FILE::$ASSET_FILE"
         env:
           ASSET_DIR: github-actions-sandbox
-          ASSET: github-actions-sandbox.tar.gz
+          ASSET_FILE: github-actions-sandbox.tar.gz
+        id: asset
 
       - uses: softprops/action-gh-release@v1
         with:
-          files: "$ASSET"
+          files: ${{ steps.asset.outputs.ASSET_FILE }}
           generate_release_notes: true
