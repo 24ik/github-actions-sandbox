@@ -1,0 +1,44 @@
+name: Publish Release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+on:
+  push:
+    tags:
+      - "v*"
+
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.nimble
+          key: ${{ runner.os }}-nimble-${{ hashFiles("*.nimble") }}
+
+      - uses: jiro4989/setup-nim-action@v1
+
+      - run: nimble -y install
+
+      - run: |-
+          echo "ASSET=$ASSET" >> $GITHUB_ENV
+          mkdir "$ASSET_DIR"
+          cp ./github_actions_sandbox "./$ASSET_DIR"
+          tar -zcf "$ASSET" "./$ASSET_DIR"
+        env:
+          ASSET_DIR: github-actions-sandbox
+          ASSET: github-actions-sandbox.tar.gz
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: "$ASSET"
+          generate_release_notes: true
