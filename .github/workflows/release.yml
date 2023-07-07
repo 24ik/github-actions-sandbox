@@ -23,7 +23,7 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ~/.nimble
-          key: ${{ runner.os }}-nimble-${{ hashFiles("*.nimble") }}
+          key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
 
       - uses: jiro4989/setup-nim-action@v1
 
