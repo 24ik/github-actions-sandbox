@@ -15,31 +15,58 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macOS-latest
+
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v3
         with:
           path: ~/.nimble
           key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
-
+          restore-keys: |
+              ${{ runner.os }}-nimble-
+        if: runner.os != 'Windows'
       - uses: jiro4989/setup-nim-action@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: nimble -y install
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }}
+          path: ./github_actions_sandbox.exe
+        if: runner.os == 'Windows'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }}
+          path: ./github_actions_sandbox
+        if: runner.os != 'Windows'
+
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+
       - run: |-
-          mkdir "$ASSET_DIR"
-          cp ./github_actions_sandbox "./$ASSET_DIR"
-          tar -zcf "$ASSET_FILE" "./$ASSET_DIR"
-          echo "::set-output name=ASSET_FILE::$ASSET_FILE"
-        env:
-          ASSET_DIR: github-actions-sandbox
-          ASSET_FILE: github-actions-sandbox.tar.gz
-        id: asset
+          tar -zcf ./Linux.tar.gz ./Linux
+          tar -zcf ./Windows.tar.gz ./Windows
+          tar -zcf ./macOS.tar.gz ./macOS
 
       - uses: softprops/action-gh-release@v1
         with:
-          files: ${{ steps.asset.outputs.ASSET_FILE }}
+          files: |-
+              ./Linux.tar.gz
+              ./Windows.tar.gz
+              ./macOS.tar.gz
           generate_release_notes: true
