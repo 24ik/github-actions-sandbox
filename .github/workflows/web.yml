@@ -19,31 +19,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v3
         with:
           path: ~/.nimble
           key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
-
+          restore-keys: |
+            ${{ runner.os }}-nimble-
+          if: ${{ runner.os }} != 'Windows'
       - uses: jiro4989/setup-nim-action@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: nim doc --project --index ./src/github_actions_sandbox.nim
+      - run: |-
+          nim doc --project --index ./src/github_actions_sandbox.nim
+          mv ./src/htmldocs/github_actions_sandbox.html ./src/htmldocs/index.html
 
-      - run: mv ./src/htmldocs/github_actions_sandbox.html ./src/htmldocs/index.html
-
-      - uses: actions/configure-pages@v2
-
+      - uses: actions/configure-pages@v3
       - uses: actions/upload-pages-artifact@v1
         with:
           path: ./src/htmldocs
 
   deploy:
+    needs: build
+
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
+
     steps:
-      - uses: actions/deploy-pages@v1
+      - uses: actions/deploy-pages@v2
