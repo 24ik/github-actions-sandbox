@@ -72,4 +72,3 @@ jobs:
               ./Windows.zip
               ./macOS.zip
           generate_release_notes: true
-          body: This is pre-pended body test. github.ref_name is: ${{ github.ref_name }}
