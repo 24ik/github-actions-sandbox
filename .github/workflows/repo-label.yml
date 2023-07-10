@@ -16,7 +16,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
+  repo-label:
     runs-on: ubuntu-latest
 
     steps:

@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  web-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,8 +43,8 @@ jobs:
         with:
           path: ./src/htmldocs
 
-  deploy:
-    needs: build
+  web-deploy:
+    needs: web-build
 
     runs-on: ubuntu-latest
 
