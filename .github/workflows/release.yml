@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  release-build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -52,8 +52,8 @@ jobs:
           path: ./github_actions_sandbox
         if: runner.os != 'Windows'
 
-  release:
-    needs: build
+  release-publish:
+    needs: release-build
 
     runs-on: ubuntu-latest
 
