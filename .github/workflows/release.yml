@@ -72,3 +72,4 @@ jobs:
               ./Windows.zip
               ./macOS.zip
           generate_release_notes: true
+          body: "See [Documentation](${{ github.ref_name }})."
