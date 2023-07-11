@@ -14,7 +14,7 @@ on:
     branches:
       - main
     tags:
-      - "v*"
+      - "v*.*.*"
 
   workflow_dispatch:
 
@@ -40,14 +40,13 @@ jobs:
           mv ./src/htmldocs/github_actions_sandbox.html ./src/htmldocs/index.html
 
       - run: |-
-          mv ./src/htmldocs ./src/${{ github.ref_name }}
-          mkdir ./src/htmldocs
-          mv ./src/${{ github.ref_name }} ./src/htmldocs
+          mkdir ./htmldocs
+          mv ./src/htmldocs ./htmldocs/${{ github.ref_name }}
 
       - uses: actions/configure-pages@v3
       - uses: actions/upload-pages-artifact@v1
         with:
-          path: ./src/htmldocs
+          path: ./htmldocs
 
   web-deploy:
     needs: web-build

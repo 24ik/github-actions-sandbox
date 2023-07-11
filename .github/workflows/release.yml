@@ -10,7 +10,7 @@ permissions:
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
 
   workflow_dispatch:
 
@@ -71,4 +71,4 @@ jobs:
               ./Windows.zip
               ./macOS.zip
           generate_release_notes: true
-          body: "See [Documentation](${{ github.ref_name }})."
+          body: "See [Documentation](https://${{ github.repository_owner }}.github.io/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.ref_name }})."
