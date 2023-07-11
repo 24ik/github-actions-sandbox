@@ -1,4 +1,4 @@
-name: Add Label
+name: Add Labels to PR
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

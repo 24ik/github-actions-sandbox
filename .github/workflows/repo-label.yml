@@ -1,4 +1,4 @@
-name: Sync Labels
+name: Setup Repository Labels
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
