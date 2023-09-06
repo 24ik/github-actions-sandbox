@@ -14,6 +14,8 @@ bin           = @["github_actions_sandbox"]
 
 requires "nim ^= 2.0.0"
 
+requires "nigui ^= 0.2.7"
+
 
 # Tasks
 
