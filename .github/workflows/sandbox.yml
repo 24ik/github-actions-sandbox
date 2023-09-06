@@ -28,4 +28,4 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: "nimble -y install -p:-d:danger -p:-d:foo=1"
+      - run: nimble -y install "-p:-d:danger" "-p:-d:foo=1"
