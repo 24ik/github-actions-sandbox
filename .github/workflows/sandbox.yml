@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -34,9 +34,9 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: nimble -y install -p:-d:danger -p:-d:foo=1
+      - run: nimble -y install -d -p:-d:danger -p:-d:foo=1
         if: runner.os == 'Linux'
-      - run: nimble -y install "-p:-d:danger" "-p:-d:foo=1"
+      - run: nimble -y install -p:"-d:danger" -p:"-d:foo=2"
         if: runner.os == 'Windows'
-      - run: nimble -y install -p:-d:danger -p:-d:foo=1
+      - run: nimble -y install -d -p:-d:danger -p:-d:foo=3
         if: runner.os == 'macOS'
