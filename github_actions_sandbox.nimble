@@ -21,9 +21,6 @@ requires "https://github.com/izumiya-keisuke/puyo-simulator ^= 0.11.7"
 # Tasks
 
 task test, "Test":
-  if buildOS == "macosx":
-    exec "nimble install -d -p:\"-d:avx2=false\" -p:\"-d:bmi2=false\""
-  else:
-    exec "nimble install -d"
+  exec "nimble install -d -p:\"-d:avx2=false\" -p:\"-d:bmi2=false\""
   exec "nimble -y build"
   exec "testament all"
