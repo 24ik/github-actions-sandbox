@@ -34,6 +34,10 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: brew install libgtk gtk+3
+        if: runner.os == 'macOS'
+      - run: brew info gtk+3
+        if: runner.os == 'macOS'
       - run: nimble -y install -d -p:-d:danger -p:-d:foo=1
         if: runner.os == 'Linux'
       - run: nimble -y install -p:"-d:danger" -p:"-d:foo=2"
