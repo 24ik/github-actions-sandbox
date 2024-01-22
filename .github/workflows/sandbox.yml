@@ -34,7 +34,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: brew install libgtk gtk+3
+      - run: brew install gtk+3
         if: runner.os == 'macOS'
       - run: brew info gtk+3
         if: runner.os == 'macOS'
