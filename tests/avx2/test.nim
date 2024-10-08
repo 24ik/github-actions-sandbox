@@ -74,7 +74,7 @@ func `[]=`(
     )
 
 var field = mm256_setzero_si256()
-when not defined(windows) or defined(macosx):
+when not defined(windows) and not defined(macosx):
   for row in 3..5:
     check field[row, 2] == WhichColor(color1: 0, color2: 0)
     field[row, 2] = WhichColor(color1: 1, color2: 0)
