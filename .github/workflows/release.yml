@@ -24,6 +24,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+          - macos-13
 
     steps:
       - uses: actions/checkout@v4
@@ -49,9 +50,14 @@ jobs:
         if: runner.os == 'Windows'
       - uses: actions/upload-artifact@v4
         with:
+          name: macOS-intel
+          path: ./github_actions_sandbox
+        if: runner.os == 'macOS' && ${{ env.RUNNER_ARCH }} == 'X64'
+      - uses: actions/upload-artifact@v4
+        with:
           name: ${{ runner.os }}
           path: ./github_actions_sandbox
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && ${{ env.RUNNER_ARCH }} != 'X64'
 
   release-publish:
     needs: release-build

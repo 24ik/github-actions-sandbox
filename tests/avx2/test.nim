@@ -7,8 +7,7 @@ when not defined(windows) and defined(amd64):
   import std/[bitops, unittest]
   import nimsimd/[avx2]
 
-  when defined(gcc):
-    echo "GCC detected"
+  when defined(gcc) or defined(clang):
     {.passc: "-mavx2".}
     {.passl: "-mavx2".}
 
