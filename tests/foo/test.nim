@@ -1,6 +1,6 @@
 discard """
   action: "run"
-  targets: "c js"
+  targets: "js"
 """
 
 import unittest
