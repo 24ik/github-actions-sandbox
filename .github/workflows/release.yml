@@ -23,34 +23,41 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest
+          - macos-latest
+          - macos-13
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.nimble
-          key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
+          key: ${{ runner.os }}-nimble-v2-${{ hashFiles('*.nimble') }}
           restore-keys: |
-              ${{ runner.os }}-nimble-
+              ${{ runner.os }}-nimble-v2-
         if: runner.os != 'Windows'
-      - uses: jiro4989/setup-nim-action@v1
+      - uses: jiro4989/setup-nim-action@v2
         with:
+          version: '2.2.x'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: nimble -y install
+      - run: nimble -y install -p:-static
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}
           path: ./github_actions_sandbox.exe
         if: runner.os == 'Windows'
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macOS-intel
+          path: ./github_actions_sandbox
+        if: runner.os == 'macOS' && ${{ env.RUNNER_ARCH }} == 'X64'
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}
           path: ./github_actions_sandbox
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && ${{ env.RUNNER_ARCH }} != 'X64'
 
   release-publish:
     needs: release-build
@@ -58,17 +65,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
 
       - run: |-
           tar -zcvf Linux.tar.gz ./Linux
           zip -rv Windows.zip ./Windows
           zip -rv macOS.zip ./macOS
+          zip -rv macOS-intel.zip ./macOS-intel
 
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           files: |-
               ./Linux.tar.gz
               ./Windows.zip
               ./macOS.zip
+              ./macOS-intel.zip
           generate_release_notes: true
