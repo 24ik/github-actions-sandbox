@@ -22,6 +22,6 @@ requires "nimsimd ^= 1.2.13"
 # Tasks
 
 task test, "Test":
-  exec "nimble -y build"
+  exec "nimble -y build -static"
   exec "nim js src/github_actions_sandbox.nim"
   exec "testament all"
