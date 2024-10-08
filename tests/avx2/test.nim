@@ -8,6 +8,7 @@ when not defined(windows) and defined(amd64):
   import nimsimd/[avx2]
 
   when defined(gcc):
+    echo "GCC detected"
     {.passc: "-mavx2".}
     {.passl: "-mavx2".}
 
