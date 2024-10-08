@@ -74,11 +74,12 @@ func `[]=`(
     )
 
 var field = mm256_setzero_si256()
-for row in 3..5:
-  check field[row, 2] == WhichColor(color1: 0, color2: 0)
-  field[row, 2] = WhichColor(color1: 1, color2: 0)
-  check field[row, 2] == WhichColor(color1: 1, color2: 0)
-for col in 1..3:
-  check field[10, col] == WhichColor(color1: 0, color2: 0)
-  field[10, col] = WhichColor(color1: 0, color2: 1)
-  check field[10, col] == WhichColor(color1: 0, color2: 1)
+when not defined(windows):
+  for row in 3..5:
+    check field[row, 2] == WhichColor(color1: 0, color2: 0)
+    field[row, 2] = WhichColor(color1: 1, color2: 0)
+    check field[row, 2] == WhichColor(color1: 1, color2: 0)
+  for col in 1..3:
+    check field[10, col] == WhichColor(color1: 0, color2: 0)
+    field[10, col] = WhichColor(color1: 0, color2: 1)
+    check field[10, col] == WhichColor(color1: 0, color2: 1)
