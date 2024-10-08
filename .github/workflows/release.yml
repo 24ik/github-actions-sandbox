@@ -41,7 +41,7 @@ jobs:
           version: '2.2.x'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: nimble -y install -p:-static
+      - run: nimble -y install
 
       - uses: actions/upload-artifact@v4
         with:

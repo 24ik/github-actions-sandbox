@@ -1,3 +1,3 @@
 # GitHub Actions Sandbox
 
-[ドキュメント](https://izumiya-keisuke.github.io/github-actions-sandbox)
+[ドキュメント](https://24ik.github.io/github-actions-sandbox)
