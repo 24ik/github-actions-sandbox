@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.5.0"
+version       = "0.5.1"
 author        = "Keisuke Izumiya"
 description   = "A new awesome nimble package"
 license       = "Apache-2.0"
@@ -22,6 +22,6 @@ requires "nimsimd ^= 1.2.13"
 # Tasks
 
 task test, "Test":
-  exec "nimble -y build -p:-static"
+  exec "nimble -y build"
   exec "nim js src/github_actions_sandbox.nim"
   exec "testament all"
