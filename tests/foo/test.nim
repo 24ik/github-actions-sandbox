@@ -11,7 +11,9 @@ import std/os
 static:
   echo when defined(js): "===JS===" else: "===C==="
   let s = currentSourcePath().parentDir.parentDir.parentDir / "github_actions_sandbox.nimble"
-  echo "===DIR: ", s
+  echo "===DIR: ", currentSourcePath()
+  echo "===DIR1: ", currentSourcePath().parentDir
+  echo "===FILE: ", s
   echo staticRead(s)
   echo "===FIN==="
 when defined(windows):
