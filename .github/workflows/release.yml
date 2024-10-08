@@ -37,9 +37,10 @@ jobs:
         if: runner.os != 'Windows'
       - uses: jiro4989/setup-nim-action@v2
         with:
+          version: '2.2.x'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: nimble -y install
+      - run: nimble -y install -p:-static
 
       - uses: actions/upload-artifact@v4
         with:

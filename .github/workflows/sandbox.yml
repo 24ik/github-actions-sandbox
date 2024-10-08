@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Sandbox
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,7 +23,8 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest
+          - macos-latest
+          - macos-13
 
     steps:
       - uses: actions/checkout@v4
@@ -40,4 +41,4 @@ jobs:
           nim-version: '2.2.x'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: nimble -y test
+      - run: nim --eval:"echo defined(macosx); echo defined(osx); echo defined(linux); echo defined(unix); echo defined(cpu64); echo defined(amd64); echo defined(arm64)"
