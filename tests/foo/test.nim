@@ -8,5 +8,5 @@ import unittest
 check 1 + 2 == 3
 
 import std/os
-staic:
+static:
   echo staticRead(currentSourcePath().parentDir.parentDir.parentDir / "github_actions_sandbox.nimble")
