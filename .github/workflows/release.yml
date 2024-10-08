@@ -24,7 +24,6 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-          - macos-13
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +37,7 @@ jobs:
         if: runner.os != 'Windows'
       - uses: jiro4989/setup-nim-action@v2
         with:
-          version: '2.2.x'
+          nim-version: '2.2.x'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: nimble -y install
@@ -50,14 +49,9 @@ jobs:
         if: runner.os == 'Windows'
       - uses: actions/upload-artifact@v4
         with:
-          name: macOS-intel
-          path: ./github_actions_sandbox
-        if: runner.os == 'macOS' && ${{ env.RUNNER_ARCH }} == 'X64'
-      - uses: actions/upload-artifact@v4
-        with:
           name: ${{ runner.os }}
           path: ./github_actions_sandbox
-        if: runner.os != 'Windows' && ${{ env.RUNNER_ARCH }} != 'X64'
+        if: runner.os != 'Windows'
 
   release-publish:
     needs: release-build
@@ -71,7 +65,6 @@ jobs:
           tar -zcvf Linux.tar.gz ./Linux
           zip -rv Windows.zip ./Windows
           zip -rv macOS.zip ./macOS
-          zip -rv macOS-intel.zip ./macOS-intel
 
       - uses: softprops/action-gh-release@v2
         with:
@@ -79,5 +72,4 @@ jobs:
               ./Linux.tar.gz
               ./Windows.zip
               ./macOS.zip
-              ./macOS-intel.zip
           generate_release_notes: true
