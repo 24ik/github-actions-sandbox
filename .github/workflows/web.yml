@@ -36,6 +36,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |-
+          nimble install -d
           nim doc --project --index ./src/github_actions_sandbox.nim
           mv ./src/htmldocs/github_actions_sandbox.html ./src/htmldocs/index.html
 
