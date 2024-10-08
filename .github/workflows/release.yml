@@ -23,7 +23,8 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest
+          - macos-latest
+          - macos-13
 
     steps:
       - uses: actions/checkout@v4
@@ -65,6 +66,7 @@ jobs:
           tar -zcvf Linux.tar.gz ./Linux
           zip -rv Windows.zip ./Windows
           zip -rv macOS.zip ./macOS
+          zip -rv macOS-intel.zip ./macOS-intel
 
       - uses: softprops/action-gh-release@v2
         with:
@@ -72,4 +74,5 @@ jobs:
               ./Linux.tar.gz
               ./Windows.zip
               ./macOS.zip
+              ./macOS-intel.zip
           generate_release_notes: true

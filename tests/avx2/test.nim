@@ -3,7 +3,7 @@ discard """
   targets: "c cpp"
 """
 
-when not defined(windows) and not defined(macosx):
+when not defined(windows) and defined(amd64):
   import std/[bitops, unittest]
   import nimsimd/[avx2]
 
