@@ -26,27 +26,27 @@ jobs:
           - macOS-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.nimble
-          key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
+          key: ${{ runner.os }}-nimble-v2-${{ hashFiles('*.nimble') }}
           restore-keys: |
-              ${{ runner.os }}-nimble-
+              ${{ runner.os }}-nimble-v2-
         if: runner.os != 'Windows'
-      - uses: jiro4989/setup-nim-action@v1
+      - uses: jiro4989/setup-nim-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: nimble -y install
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}
           path: ./github_actions_sandbox.exe
         if: runner.os == 'Windows'
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}
           path: ./github_actions_sandbox
@@ -58,14 +58,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
 
       - run: |-
           tar -zcvf Linux.tar.gz ./Linux
           zip -rv Windows.zip ./Windows
           zip -rv macOS.zip ./macOS
 
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           files: |-
               ./Linux.tar.gz
