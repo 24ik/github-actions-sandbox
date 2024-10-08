@@ -44,3 +44,8 @@ jobs:
       - run: nim --eval:"echo defined(macosx); echo defined(osx); echo defined(linux); echo defined(unix); echo defined(cpu64); echo defined(amd64); echo defined(arm64)"
 
       - run: echo ${{ runner.name }}
+
+      - name: Print runner info
+        run: |
+          echo "OS: $RUNNER_OS"
+          echo "Architecture: $RUNNER_ARCH"
