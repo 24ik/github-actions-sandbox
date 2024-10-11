@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.5.2"
+version       = "0.6.0"
 author        = "Keisuke Izumiya"
 description   = "A new awesome nimble package"
 license       = "Apache-2.0"
@@ -15,8 +15,8 @@ bin           = @["github_actions_sandbox"]
 requires "nim ^= 2.2.0"
 
 requires "karax ^= 1.3.3"
-requires "nigui ^= 0.2.8"
 requires "nimsimd ^= 1.2.13"
+requires "uing ^= 0.8.2"
 
 
 # Tasks
