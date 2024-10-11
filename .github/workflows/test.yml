@@ -40,4 +40,7 @@ jobs:
           nim-version: '2.2.x'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: sudo apt-get install libgtk-3-dev
+        if: runner.os == 'Linux'
+
       - run: nimble -y test
