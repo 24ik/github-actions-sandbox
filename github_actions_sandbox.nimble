@@ -23,5 +23,4 @@ requires "uing ^= 0.8.2"
 
 task test, "Test":
   exec "nimble -y build"
-  exec "nim js src/github_actions_sandbox.nim"
   exec "testament all"
