@@ -1,0 +1,44 @@
+name: Deploy Web Page 2
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+on:
+  push:
+
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nimble
+          key: ${{ runner.os }}-nimble-v2-${{ hashFiles('*.nimble') }}
+          restore-keys: |
+            ${{ runner.os }}-nimble-v2-
+        if: runner.os != 'Windows'
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: '2.2.x'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |-
+          nimble install -d
+          nim doc --project --index ./src/github_actions_sandbox.nim
+          mv ./src/htmldocs/github_actions_sandbox.html ./src/htmldocs/index.html
+          mkdir ./web-build
+          mv ./src/htmldocs ./web-build/${{ github.ref_name }}
+
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./web-build
+          clean: false
