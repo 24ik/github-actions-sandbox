@@ -35,6 +35,7 @@ jobs:
           nimble install -d
           nim doc --project --index ./src/github_actions_sandbox.nim
           mv ./src/htmldocs/github_actions_sandbox.html ./src/htmldocs/index.html
+          mkdir ./web-build
           mv ./src/htmldocs ./web-build/${{ github.ref_name }}
 
       - uses: JamesIves/github-pages-deploy-action@v4
