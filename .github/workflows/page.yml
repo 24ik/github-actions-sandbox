@@ -40,5 +40,5 @@ jobs:
 
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./web-build/${{ github.ref_name }}
+          folder: ./web-build
           clean: false
