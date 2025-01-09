@@ -5,7 +5,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-     - uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.nimble
           key: ${{ runner.os }}-nimble-v2-${{ hashFiles('*.nimble') }}
